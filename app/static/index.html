@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Envoy Gateway Admin</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">EG</div>
+        <div>
+          <h1>Envoy Gateway Admin</h1>
+          <p>Qubership Service Mesh</p>
+        </div>
+      </div>
+
+      <nav class="gateway-nav" id="gateway-nav"></nav>
+
+      <div class="sidebar-footer">
+        <div class="cp-status" id="cp-status">
+          <span class="dot"></span>
+          <span>Control Plane</span>
+        </div>
+        <label class="refresh-toggle">
+          <input type="checkbox" id="auto-refresh" checked />
+          Auto-refresh (10s)
+        </label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2 id="page-title">Dashboard</h2>
+          <p id="page-subtitle">Production triage for Envoy ingress gateways</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="timestamp" id="last-updated">—</span>
+          <button class="btn" id="refresh-btn" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <section class="dashboard" id="dashboard-view">
+        <div class="summary-bar" id="summary-bar"></div>
+        <div class="cards" id="gateway-cards"></div>
+        <div class="section-block">
+          <div class="section-head">
+            <h3>Impact Logs</h3>
+            <span class="section-meta" id="impact-meta">Errors and warnings across all gateways</span>
+          </div>
+          <div id="impact-logs-panel" class="impact-panel"></div>
+        </div>
+      </section>
+
+      <section class="detail hidden" id="detail-view">
+        <div class="detail-header">
+          <div class="detail-title">
+            <span class="gateway-badge" id="detail-badge"></span>
+            <div>
+              <h3 id="detail-name"></h3>
+              <p id="detail-cluster"></p>
+            </div>
+          </div>
+          <div class="status-pill" id="detail-status">Unknown</div>
+        </div>
+
+        <div class="metrics-row" id="detail-metrics"></div>
+        <div class="alerts-row" id="detail-alerts"></div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="traffic" type="button">Traffic</button>
+          <button class="tab" data-tab="logs" type="button">Impact Logs</button>
+          <button class="tab" data-tab="overview" type="button">Overview</button>
+          <button class="tab" data-tab="stats" type="button">Stats</button>
+          <button class="tab" data-tab="clusters" type="button">Clusters</button>
+          <button class="tab" data-tab="listeners" type="button">Listeners</button>
+          <button class="tab" data-tab="config" type="button">Config Dump</button>
+        </div>
+
+        <div class="panel active" id="panel-traffic"></div>
+        <div class="panel" id="panel-logs"></div>
+        <div class="panel" id="panel-overview"></div>
+        <div class="panel" id="panel-stats"></div>
+        <div class="panel" id="panel-clusters"></div>
+        <div class="panel" id="panel-listeners"></div>
+        <div class="panel" id="panel-config"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="card-head">
+        <span class="card-dot"></span>
+        <h3 class="card-title"></h3>
+        <span class="alert-badge hidden"></span>
+      </div>
+      <p class="card-cluster"></p>
+      <div class="card-codes"></div>
+      <div class="card-metrics"></div>
+      <button class="card-link" type="button">Triage gateway →</button>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

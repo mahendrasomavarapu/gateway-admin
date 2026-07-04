@@ -1,0 +1,2 @@
+FROM gateway-admin-ui:local
+COPY app/ /app/

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gateway-admin-ui
+  namespace: qubership-mesh
+  labels:
+    app.kubernetes.io/name: gateway-admin-ui
+    app.kubernetes.io/part-of: qubership-mesh
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: gateway-admin-ui-logs
+  namespace: qubership-mesh
+  labels:
+    app.kubernetes.io/name: gateway-admin-ui
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gateway-admin-ui-logs
+  namespace: qubership-mesh
+  labels:
+    app.kubernetes.io/name: gateway-admin-ui
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: gateway-admin-ui-logs
+subjects:
+  - kind: ServiceAccount
+    name: gateway-admin-ui
+    namespace: qubership-mesh
